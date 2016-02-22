@@ -1,16 +1,17 @@
 package docker
 
 import (
-	"github.com/fsouza/go-dockerclient"
 	"io"
+
+	"github.com/fsouza/go-dockerclient"
 )
 
 type DockerRunner struct {
 	Docker *docker.Client
-	Stream io.Writer 
+	Stream io.Writer
 }
 
-func (dr *DockerRunner) GetStream() (io.Writer) {
+func (dr *DockerRunner) GetStream() io.Writer {
 	return dr.Stream
 }
 
@@ -30,26 +31,25 @@ func (dr *DockerRunner) BuildContainer(img string, envVars []string) (string, er
 	})
 
 	if err != nil {
-		return "", err;
+		return "", err
 	}
 
 	err = dr.Docker.StartContainer(
 		container.ID,
 		&docker.HostConfig{
-			DNS:   []string{"8.8.8.8", "8.8.4.4"},
+			DNS: []string{"8.8.8.8", "8.8.4.4"},
 			Binds: []string{
-				"/Users/gianlucaarbezzano/git/Atlas:/tmp",
-				"/Users/gianlucaarbezzano/.ssh:/root/.ssh",
+				"/Users/gianarb/go/src/github.com/gianarb/slimmer:/tmp",
 			},
 		},
 	)
 	if err != nil {
-		return "", err;
+		return "", err
 	}
-	return container.ID, nil;
+	return container.ID, nil
 }
 
-func (dr *DockerRunner) Exec(containerId string, command []string) (error) {
+func (dr *DockerRunner) Exec(containerId string, command []string) (int, error) {
 
 	exec, err := dr.Docker.CreateExec(docker.CreateExecOptions{
 		Container:    containerId,
@@ -61,35 +61,25 @@ func (dr *DockerRunner) Exec(containerId string, command []string) (error) {
 	})
 
 	if err != nil {
-		return err;
+		return 1, err
 	}
 
 	err = dr.Docker.StartExec(exec.ID, docker.StartExecOptions{
-		Detach:      false,
-		Tty:         false,
-		RawTerminal: true,
+		Detach:       false,
+		Tty:          false,
+		RawTerminal:  true,
 		OutputStream: dr.Stream,
 		ErrorStream:  dr.Stream,
 	})
-
-	//inspect, err := dr.Docker.InspectExec(exec.ID)
-
-	if err != nil {
-		return err;
-	}
-
-	if err != nil {
-		return err;
-	}
-
-	return nil
+	inspect, err := dr.Docker.InspectExec(exec.ID)
+	return inspect.ExitCode, err
 }
 
 func (dr *DockerRunner) RemoveContainer(containerId string) error {
 	err := dr.Docker.KillContainer(docker.KillContainerOptions{ID: containerId})
 	err = dr.Docker.RemoveContainer(docker.RemoveContainerOptions{ID: containerId, RemoveVolumes: true})
-	if(err != nil) {
-		return err;
+	if err != nil {
+		return err
 	}
 
 	return nil
