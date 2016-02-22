@@ -1,0 +1,39 @@
+package main
+
+import (
+	dockerRun "github.com/gianarb/slimmer/runner/docker"
+	"github.com/mitchellh/cli"
+	"github.com/gianarb/slimmer/command"
+	"github.com/gianarb/slimmer/logger"
+	"github.com/gianarb/slimmer/runner/stream"
+	"github.com/fsouza/go-dockerclient"
+	"bytes"
+	"log"
+	"os"
+)
+
+func main() {
+	logger := log.New(&logger.Console{}, "", 1)
+	c := cli.NewCLI("slimmer", "0.0.0")
+    c.Args = os.Args[1:]
+
+	client, err := docker.NewClientFromEnv()
+
+	if err != nil {
+		logger.Fatal(err)
+	}
+
+	b := new(bytes.Buffer)
+	s := stream.BufferStream{b}
+	dockerRunner := dockerRun.DockerRunner{client, s}
+
+    c.Commands = map[string]cli.CommandFactory{
+        "api": func() (cli.Command, error) {
+			return &command.BuildCommand{&dockerRunner, logger}, nil;
+		},
+    }
+
+    exitStatus, _ := c.Run()
+
+    os.Exit(exitStatus)
+}
