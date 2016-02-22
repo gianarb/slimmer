@@ -15,14 +15,14 @@ func (dr *DockerRunner) GetStream() io.Writer {
 	return dr.Stream
 }
 
-func (dr *DockerRunner) BuildContainer(img string, envVars []string) (string, error) {
+func (dr *DockerRunner) BuildContainer(img string, envVars []string, volumes []string, workDir string) (string, error) {
 
 	container, err := dr.Docker.CreateContainer(docker.CreateContainerOptions{
 		"",
 		&docker.Config{
 			Image:        img,
 			Cmd:          []string{"sleep", "1000"},
-			WorkingDir:   "/tmp",
+			WorkingDir:   workDir,
 			AttachStdout: false,
 			AttachStderr: false,
 			Env:          envVars,
@@ -37,10 +37,8 @@ func (dr *DockerRunner) BuildContainer(img string, envVars []string) (string, er
 	err = dr.Docker.StartContainer(
 		container.ID,
 		&docker.HostConfig{
-			DNS: []string{"8.8.8.8", "8.8.4.4"},
-			Binds: []string{
-				"/Users/gianarb/go/src/github.com/gianarb/slimmer:/tmp",
-			},
+			DNS:   []string{"8.8.8.8", "8.8.4.4"},
+			Binds: volumes,
 		},
 	)
 	if err != nil {

@@ -14,29 +14,33 @@ type BuildCommand struct {
 	Logger *log.Logger
 }
 
-type envVars []string
+type ListString []string
 
-func (e *envVars) Set(value string) error {
+func (e *ListString) Set(value string) error {
 	*e = append(*e, value)
 	return nil
 }
 
-func (e *envVars) String() string {
+func (e *ListString) String() string {
 	return fmt.Sprintf("%d", *e)
 }
 
 func (c *BuildCommand) Run(args []string) int {
 	var image string
-	var envVar envVars
+	var workdir string
+	var envVar ListString
+	var volumes ListString
 	cmdFlags := flag.NewFlagSet("event", flag.ContinueOnError)
 	cmdFlags.StringVar(&image, "i", "", "Start docker image")
 	cmdFlags.Var(&envVar, "e", "List envaironment variables")
+	cmdFlags.Var(&volumes, "v", "List of volumes to share")
+	cmdFlags.StringVar(&workdir, "w", "/tmp", "work directory")
 
 	if err := cmdFlags.Parse(args); err != nil {
 		c.Logger.Fatal(err)
 	}
 
-	containerId, err := c.Runner.BuildContainer(image, envVar)
+	containerId, err := c.Runner.BuildContainer(image, envVar, volumes, workdir)
 	if err != nil {
 		c.Runner.RemoveContainer(containerId)
 		c.Logger.Fatal(err)
