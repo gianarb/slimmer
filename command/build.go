@@ -28,8 +28,6 @@ func (c *BuildCommand) Run(args []string) int {
 	c.Runner.Exec(containerId, []string{"bash", "./build.sh"})
 	c.Runner.RemoveContainer(containerId)
 
-	c.Logger.Printf("Container %s :: \n %s :: \n", containerId[0:12], c.Runner.GetStream().String())
-
 	return 0
 }
 

@@ -1,12 +1,12 @@
 package runner
 
 import(
-	"github.com/gianarb/slimmer/runner/stream"
+	"io"
 )
 
 type Runner interface {
 	BuildContainer(img string, envVars []string) (string, error)
 	Exec(containerId string, command []string) (error)
 	RemoveContainer(containerId string) (error)
-	GetStream() (stream.BufferStream)
+	GetStream() (io.Writer)
 }

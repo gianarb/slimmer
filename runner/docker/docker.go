@@ -2,15 +2,15 @@ package docker
 
 import (
 	"github.com/fsouza/go-dockerclient"
-	"github.com/gianarb/slimmer/runner/stream"
+	"io"
 )
 
 type DockerRunner struct {
 	Docker *docker.Client
-	Stream stream.BufferStream
+	Stream io.Writer 
 }
 
-func (dr *DockerRunner) GetStream() (stream.BufferStream) {
+func (dr *DockerRunner) GetStream() (io.Writer) {
 	return dr.Stream
 }
 

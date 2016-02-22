@@ -7,7 +7,6 @@ import (
 	"github.com/gianarb/slimmer/logger"
 	"github.com/gianarb/slimmer/runner/stream"
 	"github.com/fsouza/go-dockerclient"
-	"bytes"
 	"log"
 	"os"
 )
@@ -23,8 +22,7 @@ func main() {
 		logger.Fatal(err)
 	}
 
-	b := new(bytes.Buffer)
-	s := stream.BufferStream{b}
+	s := stream.ConsoleStream{}
 	dockerRunner := dockerRun.DockerRunner{client, s}
 
     c.Commands = map[string]cli.CommandFactory{
