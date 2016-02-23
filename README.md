@@ -24,9 +24,9 @@ go test -v ./...
 
 ## with slimmer
 ```bash
-slimmer -i golang:1.5 -v /Users/gianarb/go/slimmer:/tmp -w /tmp
+slimmer -i golang:1.5 -v /Users/gianarb/go/slimmer:/slimmer -w /slimmer
 ```
-In this case you can omit `-w` because the default value is `/tmp`
+In this case you can omit `-w` because the default value is `/slimmer`
 
 # Notify 
 Trigger a notification when the build fisished

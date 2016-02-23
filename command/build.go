@@ -34,7 +34,7 @@ func (c *BuildCommand) Run(args []string) int {
 	cmdFlags.StringVar(&image, "i", "", "Start docker image")
 	cmdFlags.Var(&envVar, "e", "List envaironment variables")
 	cmdFlags.Var(&volumes, "v", "List of volumes to share")
-	cmdFlags.StringVar(&workdir, "w", "/tmp", "work directory")
+	cmdFlags.StringVar(&workdir, "w", "/slimmer", "work directory")
 
 	if err := cmdFlags.Parse(args); err != nil {
 		c.Logger.Fatal(err)
