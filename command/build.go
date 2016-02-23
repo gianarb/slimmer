@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"strings"
-
 	"github.com/gianarb/slimmer/runner"
 )
 
@@ -47,7 +46,7 @@ func (c *BuildCommand) Run(args []string) int {
 	}
 	c.Logger.Printf("Build %s started - source %s", containerId[0:12], image)
 
-	exitCode, err := c.Runner.Exec(containerId, []string{"bash", "./build.sh"})
+	exitCode, err := c.Runner.Exec(containerId, []string{"./build.slimmer"})
 	if err != nil {
 		c.Runner.RemoveContainer(containerId)
 		c.Logger.Fatal(err)
