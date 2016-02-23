@@ -60,8 +60,10 @@ func (c *BuildCommand) Help() string {
 	helpText := `
 Usage: start slimmer build.
 Options:
-	-i=			Start docker image
-	-e=			Start docker image
+	-i=				Start docker image
+	-e=				Start docker image
+	-w=/slimmer		Workdirectory
+	-v=				Share volumes
 `
 	return strings.TrimSpace(helpText)
 }

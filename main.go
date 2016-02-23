@@ -26,7 +26,7 @@ func main() {
 	dockerRunner := dockerRun.DockerRunner{client, s}
 
     c.Commands = map[string]cli.CommandFactory{
-        "api": func() (cli.Command, error) {
+        "build": func() (cli.Command, error) {
 			return &command.BuildCommand{&dockerRunner, logger}, nil;
 		},
     }

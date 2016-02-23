@@ -33,7 +33,7 @@ In this case you can omit `-w` because the default value is `/slimmer`
 # Environemt Variables
 We support env vars, you can inject it:
 ```bash
-slimmer -i golang:1.5 -v /Users/gianarb/go/slimmer:/tmp -w /tmp -e SECRET_TOKEN=43t3gse4ts4st4ts4s
+slimmer build -i golang:1.5 -v /Users/gianarb/go/slimmer:/tmp -w /tmp -e SECRET_TOKEN=43t3gse4ts4st4ts4s
 ```
 
 # Notify 
@@ -41,7 +41,7 @@ Trigger a notification when the build fisished
 
 ## on mac
 ```bash
-$ go run main.go api \
+$ go run main.go build \
     -v /Users/gianarb/go/src/github.com/gianarb/slimmer:/tmp \
     -i golang:1.5 && osascript -e 'display notification "Build Successed" with title "Slimmer"' \
     || osascript -e 'display notification "Builld Failed" with title "Slimmer"'
