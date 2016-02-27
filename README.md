@@ -9,14 +9,16 @@ Read my presentation ["Slimmer PoC"](http://gianarb.it/slimmer-poc-slide/) durin
 
 # Ecosystem
 
-## Catch events
+### Catch events
+
 you can use a personal implementation to catch events and trigger slimmer but to start you can try
 * [fntlnz/github-webhooks](https://github.com/fntlnz/github-webhooks)
-## Notify
+
+### Notify
+
 I wrote a set of projects to nitify quickly after and during your pipeline
 * [ircer](https://github.com/gianarb/ircer) to send IRC notifications
 * [slacker](https://github.com/gianarb/slacker) to send Slack notifications
->>>>>>> Improve readme
 
 # Install
 This project is in written go, so it's distributed as a self contained binary.
