@@ -1,12 +1,22 @@
 # Slimmer
 
-Run your testsuite in a container with only 1 command and with a simple bash
-script, you are ready to create your perfect build.
-
 Dead simple build executor with superpowers.
 The only thing you have to to is create an executable file
 with the proper [shebang line](http://unix.stackexchange.com/questions/87560/does-the-shebang-determine-the-shell-which-runs-the-script) named `build.slimmer` under
 the project root and enjoy the achievement.
+
+Read my presentation ["Slimmer PoC"](http://gianarb.it/slimmer-poc-slide/) during MeetUp Golang Dublin
+
+# Ecosystem
+
+## Catch events
+you can use a personal implementation to catch events and trigger slimmer but to start you can try
+* [fntlnz/github-webhooks](https://github.com/fntlnz/github-webhooks)
+## Notify
+I wrote a set of projects to nitify quickly after and during your pipeline
+* [ircer](https://github.com/gianarb/ircer) to send IRC notifications
+* [slacker](https://github.com/gianarb/slacker) to send Slack notifications
+>>>>>>> Improve readme
 
 # Install
 This project is in written go, so it's distributed as a self contained binary.
@@ -46,7 +56,7 @@ slimmer build -i golang:1.5 -v /Users/gianarb/go/slimmer:/tmp -w /tmp -e SECRET_
 ```
 
 # Notify 
-Trigger a notification when the build fisished
+Trigger a notification when the build fisished (local env)
 
 ## On OS X
 
