@@ -1,5 +1,7 @@
 # Slimmer
 
+[![Build Status](https://travis-ci.org/gianarb/slimmer.svg?branch=master)](https://travis-ci.org/gianarb/slimmer)
+
 Dead simple build executor with superpowers.
 The only thing you have to to is create an executable file
 with the proper [shebang line](http://unix.stackexchange.com/questions/87560/does-the-shebang-determine-the-shell-which-runs-the-script) named `build.slimmer` under
